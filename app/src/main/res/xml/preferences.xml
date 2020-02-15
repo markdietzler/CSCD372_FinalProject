@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto">
+    <EditTextPreference
+        android:id="@+id/brick_count_pref"
+        android:inputType="number"
+        android:title="Initial Brick Count (1-100)"
+        android:key="init_brick_count"
+        android:summary="How many bricks per level"
+        android:defaultValue="5" />
+    <com.example.breakout.NumberPickerPreference
+        android:inputType="number"
+        android:title="Hits to Remove Brick (1-4)"
+        android:key="hits_to_remove"
+        android:summary="How many hits are required to remove a brick"
+        android:defaultValue="2"/>
+        <!--custom:max="4"
+        custom:min="1"
+        custom:wrap="false"--> />
+    <com.example.breakout.NumberPickerPreference
+        android:inputType="number"
+        android:title="Balls Per Level (1-4)"
+        android:key="balls_per_level"
+        android:summary="How many balls you get"
+        android:defaultValue="3" />
+        <!--custom:max="4"
+        custom:min="1"
+        custom:wrap="false"--> />
+    <EditTextPreference
+        android:inputType="number"
+        android:title="Paddle Sensitivity (10-20)"
+        android:key="paddle_sensitivity"
+        android:summary="Paddle motion sensitivity"
+        android:defaultValue="15" />
+</PreferenceScreen>
