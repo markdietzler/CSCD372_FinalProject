@@ -30,6 +30,10 @@ public class Brick {
         isVisible = false;
     }
 
+    public int GetHitCount() {
+        return HitCount;
+    }
+
     public void BrickIsHit() {
         if(HitCount < 3) {
             HitCount++;

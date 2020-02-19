@@ -14,18 +14,12 @@
         android:key="hits_to_remove"
         android:summary="How many hits are required to remove a brick"
         android:defaultValue="2"/>
-        <!--custom:max="4"
-        custom:min="1"
-        custom:wrap="false"--> />
     <com.example.breakout.NumberPickerPreference
         android:inputType="number"
         android:title="Balls Per Level (1-4)"
         android:key="balls_per_level"
         android:summary="How many balls you get"
         android:defaultValue="3" />
-        <!--custom:max="4"
-        custom:min="1"
-        custom:wrap="false"--> />
     <EditTextPreference
         android:inputType="number"
         android:title="Paddle Sensitivity (10-20)"

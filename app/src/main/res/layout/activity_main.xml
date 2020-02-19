@@ -12,15 +12,19 @@
     android:paddingRight="10.0dip"
     android:paddingBottom="10.0dip"
     tools:context=".MainActivity">
-    <com.example.cscd372_breakout_game.BreakOutView
-        android:id="@+id/view"
+
+    <View
+        android:id="@+id/gameView"
+        class="com.example.cscd372_breakout_game.BreakOutView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10.0dip"
+        android:layout_margin="10.0dip"
+        android:padding="10.0dip"
         android:layout_toLeftOf="@+id/left"
         android:layout_toRightOf="@+id/right"
         android:layout_above="@+id/statusView"
         android:layout_centerInParent="true"/>
+
     <TextView android:textSize="24.0sp"
         android:textStyle="bold"
         android:textColor="#ff000000"
@@ -29,19 +33,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Level=1 Balls=3 Score=0 Bricks=5"
-        android:layout_weight="1.0"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
     <View android:id="@+id/left"
         android:background="@drawable/simple_circle"
         android:layout_width="65.0dip"
         android:layout_height="65.0dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true" />
+
     <View android:id="@+id/right"
         android:background="@drawable/simple_circle"
         android:layout_width="65.0dip"
         android:layout_height="65.0dip"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true" />
+
 </RelativeLayout>
