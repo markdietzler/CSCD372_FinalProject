@@ -1,4 +1,4 @@
-package com.example.cscd372_breakout_game;
+package pnwgamer.info.markdietzlerbreakout;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,7 +13,13 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
         Preference prefThatWasChanged = findPreference(key);
+
+        switch(key) {
+
+        }
+
     }
 
     @Override

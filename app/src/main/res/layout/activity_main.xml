@@ -1,53 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffbbbbbb"
-    android:paddingLeft="10.0dip"
-    android:paddingTop="10.0dip"
-    android:paddingRight="10.0dip"
-    android:paddingBottom="10.0dip"
+    android:background="@color/four"
+    android:id="@+id/root_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context=".MainActivity">
 
-    <View
-        android:id="@+id/gameView"
-        class="com.example.cscd372_breakout_game.BreakOutView"
+    <pnwgamer.info.markdietzlerbreakout.BreakoutGame
+        android:id="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10.0dip"
-        android:padding="10.0dip"
-        android:layout_toLeftOf="@+id/left"
-        android:layout_toRightOf="@+id/right"
-        android:layout_above="@+id/statusView"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="10.0dip"
+        android:layout_toStartOf="@id/right_paddle"
+        android:layout_toEndOf="@id/left_paddle"
+        android:layout_above="@id/score_board"
 
-    <TextView android:textSize="24.0sp"
-        android:textStyle="bold"
-        android:textColor="#ff000000"
+        />
+
+    <ImageView
+        android:id="@+id/brick_wall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="false"
+        android:contentDescription="@string/brick_wall_desc"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/brick_wall" />
+
+    <TextView
+        android:id="@+id/score_board"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/statusView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Level=1 Balls=3 Score=0 Bricks=5"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="@string/scoreboard_default"
+        android:textSize="22.0sp"
+        android:textStyle="bold"
+        android:textColor="@color/two"
+        />
 
-    <View android:id="@+id/left"
-        android:background="@drawable/simple_circle"
+    <Button
+        android:id="@+id/left_paddle"
         android:layout_width="65.0dip"
         android:layout_height="65.0dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_states" />
 
-    <View android:id="@+id/right"
-        android:background="@drawable/simple_circle"
+    <Button
+        android:id="@+id/right_paddle"
         android:layout_width="65.0dip"
         android:layout_height="65.0dip"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true" />
-
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_states" />
 </RelativeLayout>

@@ -1,10 +1,11 @@
-package com.example.cscd372_breakout_game;
+package pnwgamer.info.markdietzlerbreakout;
 
 import android.graphics.RectF;
 
 import java.util.Random;
 
 public class Ball {
+
     RectF rect;
     float xVelocity;
     float yVelocity;

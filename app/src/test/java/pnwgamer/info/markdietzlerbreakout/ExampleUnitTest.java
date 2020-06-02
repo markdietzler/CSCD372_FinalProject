@@ -1,4 +1,4 @@
-package com.example.cscd372_brekout_game;
+package pnwgamer.info.markdietzlerbreakout;
 
 import org.junit.Test;
 
