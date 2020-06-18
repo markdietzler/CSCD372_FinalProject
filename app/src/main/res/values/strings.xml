@@ -6,14 +6,12 @@
 
     <string name="brick_wall_desc">Brick Wall</string>
 
-    <string name="pref_brick_count">Destroyed Brick to Level (1-100)</string>
+    <string name="pref_brick_count">Initial Brick Count (1-100)</string>
     <string name="pref_brick_hits">Hits to Destroy Brick (1-4)</string>
     <string name="pref_balls_level">Balls Per Level (1-4)</string>
-    <string name="pref_paddle_sens">Paddle Sensitivity (10-20)</string>
 
-    <string name="pref_sum_bricks">How many bricks you have to clear to level</string>
+    <string name="pref_sum_bricks">How many bricks drawn per level</string>
     <string name="pref_sum_hits">How many hits are required to remove a brick</string>
     <string name="pref_sum_balls">How many balls you get</string>
-    <string name="pref_sum_sens">Paddle motion sensitivity</string>
 
 </resources>

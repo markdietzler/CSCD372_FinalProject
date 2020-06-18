@@ -4,11 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -20,12 +17,12 @@ import android.widget.Toast;
 import java.util.Observable;
 import java.util.Observer;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener, Observer {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener, Observer {
 
-    BreakoutGame mBreakoutGame;
-    TextView mScoreBoard;
-    Button mLeftPaddle;
-    Button mRightPaddle;
+    private BreakoutGame mBreakoutGame;
+    private TextView mScoreBoard;
+    private Button mLeftPaddle;
+    private Button mRightPaddle;
 
     private static final int PADDLE_STOP = 0;
     private static final int PADDLE_LEFT = 1;
@@ -36,21 +33,26 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mBreakoutGame = (BreakoutGame)findViewById(R.id.view);
+        mBreakoutGame = (BreakoutGame)findViewById(R.id.game_view);
         mScoreBoard = (TextView)findViewById(R.id.score_board);
         mLeftPaddle = (Button)findViewById(R.id.left_paddle);
         mRightPaddle = (Button)findViewById(R.id.right_paddle);
-        mBreakoutGame.mObserver.addObserver(this);
+        mBreakoutGame.mBreakoutGameObserver.addObserver(this);
 
-        mBreakoutGame.setOnTouchListener(this);
+        mBreakoutGame.setOnClickListener(this);
         mLeftPaddle.setOnTouchListener(this);
         mRightPaddle.setOnTouchListener(this);
+
+        if(savedInstanceState != null) {
+            getGameStateFromBundle(savedInstanceState);
+        }
     }
 
     //this is fine
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // this adds items to the action bar if it is present
+        final int landscape = getResources().getConfiguration().ORIENTATION_LANDSCAPE;
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -76,20 +78,16 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         return super.onOptionsItemSelected(item);
     }
 
-    public void onAbout(){
-        Toast.makeText(this, "Breakout, Spring 2020, Mark Dietzler",Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void update(Observable observableInput, Object obsTimeTransfer) {
         String scoreBoard = new String();
         if(observableInput != null) {
             int level, balls, score, bricks;
-            level = mBreakoutGame.mObserver.getLevel();
-            balls = mBreakoutGame.mObserver.getBalls();
-            score = mBreakoutGame.mObserver.getScore();
-            bricks = mBreakoutGame.mObserver.getBricks();
-            scoreBoard = String.format("Level: %03d Balls: %02d Score:%08d Bricks:%03d",level,balls,score,bricks );
+            level = mBreakoutGame.mBreakoutGameObserver.getLevel();
+            balls = mBreakoutGame.mBreakoutGameObserver.getBalls();
+            score = mBreakoutGame.mBreakoutGameObserver.getScore();
+            bricks = mBreakoutGame.mBreakoutGameObserver.getBricks();
+            scoreBoard = String.format("Level: %02d Balls: %02d Score:%06d Bricks:%03d",level,balls,score,bricks );
             mScoreBoard.setText(scoreBoard);
         } else {
 
@@ -100,30 +98,23 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean onTouch(View viewBeingTouched, MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
 
-            if(viewBeingTouched == findViewById(R.id.view)) {
-                mBreakoutGame.setPaused();
-            }
-
             if(viewBeingTouched == findViewById(R.id.left_paddle)){
-                mBreakoutGame.paddle.setMovementState(PADDLE_LEFT);
+                mBreakoutGame.mPlayerPaddle.setMovementState(PADDLE_LEFT);
             }
 
             if(viewBeingTouched == findViewById(R.id.right_paddle)) {
-                mBreakoutGame.paddle.setMovementState(PADDLE_RIGHT);
+                mBreakoutGame.mPlayerPaddle.setMovementState(PADDLE_RIGHT);
             }
         }
+
         if(event.getAction() == MotionEvent.ACTION_UP) {
 
-            if(viewBeingTouched == findViewById(R.id.view)) {
-                mBreakoutGame.unPause();
-            }
-
             if(viewBeingTouched == findViewById(R.id.left_paddle)){
-                mBreakoutGame.paddle.setMovementState(PADDLE_STOP);
+                mBreakoutGame.mPlayerPaddle.setMovementState(PADDLE_STOP);
             }
 
             if(viewBeingTouched == findViewById(R.id.right_paddle)) {
-                mBreakoutGame.paddle.setMovementState(PADDLE_STOP);
+                mBreakoutGame.mPlayerPaddle.setMovementState(PADDLE_STOP);
             }
         }
         return true;
@@ -133,19 +124,56 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     protected void onResume() {
         super.onResume();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        int prefs_bricks = 0;
-        int prefs_hits = 0;
-        int prefs_ball_count = 0;
-        int prefs_paddle = 0;
+        String prefs_bricks;
+        String prefs_hits;
+        String prefs_ball_count;
 
-        prefs_bricks = prefs.getInt("", mBreakoutGame.getBricks());
-        prefs_hits = prefs.getInt("", mBreakoutGame.getHits());
-        prefs_ball_count = prefs.getInt("", mBreakoutGame.getBalls());
-        prefs_paddle = prefs.getInt("", mBreakoutGame.getPaddle());
+        prefs_bricks = prefs.getString("init_brick_count", Integer.toString(mBreakoutGame.getPreferences_Bricks()));
+        prefs_hits = prefs.getString("init_brick_hits", Integer.toString(mBreakoutGame.getPreferences_Hits()));
+        prefs_ball_count = prefs.getString("init_balls_level", Integer.toString(mBreakoutGame.getPreferences_Balls()));
 
-        mBreakoutGame.setBricks(prefs_bricks);
-        mBreakoutGame.setHits(prefs_hits);
-        mBreakoutGame.setBalls(prefs_ball_count);
-        mBreakoutGame.setPaddle(prefs_paddle);
+        mBreakoutGame.setPreferences_Bricks(Integer.parseInt(prefs_bricks));
+        mBreakoutGame.setPreferences_Hits(Integer.parseInt(prefs_hits));
+        mBreakoutGame.setPreferences_Balls(Integer.parseInt(prefs_ball_count));
+        mBreakoutGame.invalidate();
+    }
+
+    @Override
+    public void onClick(View viewClicked) {
+        if(viewClicked == findViewById(R.id.game_view)) {
+            mBreakoutGame.PausedToggle();
+            mBreakoutGame.setNewGame(false);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+    }
+
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        putGameStateInBundle(state);
+    }
+
+    private void putGameStateInBundle(Bundle state) {
+        state.putInt("score", mBreakoutGame.mBreakoutGameObserver.getScore());
+        state.putInt("balls", mBreakoutGame.mBreakoutGameObserver.getBalls());
+        state.putInt("bricks", mBreakoutGame.mBreakoutGameObserver.getBricks());
+        state.putInt("level", mBreakoutGame.mBreakoutGameObserver.getLevel());
+        mBreakoutGame.setPaused(true);
+
+        //brick state
+        //brick boolean array
+    }
+
+    private void getGameStateFromBundle(Bundle state) {
+        mBreakoutGame.set_Game_Balls(state.getInt("balls"));
+        mBreakoutGame.set_Game_Score(state.getInt("score"));
+        mBreakoutGame.set_Game_Bricks(state.getInt("bricks"));
+        mBreakoutGame.set_Game_Level(state.getInt("level"));
+
+        //brick state
+        //brick boolean array
     }
 }

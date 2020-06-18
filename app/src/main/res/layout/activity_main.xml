@@ -10,7 +10,7 @@
     tools:context=".MainActivity">
 
     <pnwgamer.info.markdietzlerbreakout.BreakoutGame
-        android:id="@+id/view"
+        android:id="@+id/game_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -21,6 +21,7 @@
 
         />
 
+    <!--
     <ImageView
         android:id="@+id/brick_wall"
         android:layout_width="wrap_content"
@@ -28,7 +29,11 @@
         android:adjustViewBounds="false"
         android:contentDescription="@string/brick_wall_desc"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/brick_wall" />
+        android:layout_alignStart="@id/game_view"
+        android:layout_alignEnd="@id/game_view"
+        android:layout_alignBottom="@id/game_view"
+        android:alpha="0.3"
+        app:srcCompat="@drawable/brick_wall" />-->
 
     <TextView
         android:id="@+id/score_board"

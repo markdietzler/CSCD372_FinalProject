@@ -12,37 +12,22 @@
         android:defaultValue="5"
         />
 
-    <pnwgamer.info.markdietzlerbreakout.NumberPickerPreference
+    <EditTextPreference
         android:id="@+id/brick_hits_pref"
         android:inputType="number"
         android:key="init_brick_hits"
         android:title="@string/pref_brick_hits"
         android:summary="@string/pref_sum_hits"
         android:defaultValue="2"
-        custom:max="4"
-        custom:min="1"
-        custom:wrap="false"
-        />
-
-    <pnwgamer.info.markdietzlerbreakout.NumberPickerPreference
-        android:id="@+id/balls_level_pref"
-        android:inputType="number"
-        android:key="init_brick_hits"
-        android:title="@string/pref_balls_level"
-        android:summary="@string/pref_sum_balls"
-        android:defaultValue="3"
-        custom:max="4"
-        custom:min="1"
-        custom:wrap="false"
         />
 
     <EditTextPreference
-        android:id="@+id/paddle_sens_pref"
+        android:id="@+id/balls_level_pref"
         android:inputType="number"
-        android:key="init_paddle_sens"
-        android:title="@string/pref_paddle_sens"
-        android:summary="@string/pref_sum_sens"
-        android:defaultValue="15"
+        android:key="init_balls_level"
+        android:title="@string/pref_balls_level"
+        android:summary="@string/pref_sum_balls"
+        android:defaultValue="3"
         />
 
 </PreferenceScreen>
